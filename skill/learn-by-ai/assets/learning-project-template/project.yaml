@@ -1,0 +1,20 @@
+schema_version: "0.1"
+project_id: {{PROJECT_ID}}
+name: {{PROJECT_NAME}}
+goal: {{PROJECT_GOAL}}
+target_depth: {{TARGET_DEPTH}}
+status: "initializing"
+created_at: {{CREATED_AT}}
+updated_at: {{CREATED_AT}}
+graph_version: "0.1"
+current_node: null
+timeline:
+  target_date: null
+constraints: []
+session:
+  default_minutes: {{SESSION_MINUTES}}
+  effective_minutes_completed: 0
+settings:
+  mastery_scale: "0-4"
+  require_observable_evidence: true
+  store_source_locators_not_full_text: true

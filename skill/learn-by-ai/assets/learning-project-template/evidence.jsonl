@@ -1,0 +1,1 @@
+{"event_id":{{EVENT_ID_JSON}},"event_type":"project-initialized","timestamp":{{TIMESTAMP_JSON}},"project_name":{{PROJECT_NAME_JSON}},"goal":{{PROJECT_GOAL_JSON}},"dimensions":[],"result":"not-assessed"}

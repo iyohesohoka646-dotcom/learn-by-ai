@@ -1,0 +1,14 @@
+schema_version: "0.1"
+updated_at: {{CREATED_AT}}
+learner_profile:
+  stated_background: []
+  preferences: []
+  constraints: []
+diagnostic:
+  status: "not-started"
+  capability_anchors: []
+  critical_breakpoints: []
+  unknown_nodes: []
+node_states: []
+due_reviews: []
+active_blockers: []

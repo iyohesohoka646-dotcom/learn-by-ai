@@ -1,0 +1,7 @@
+schema_version: "0.1"
+graph_version: "0.1"
+goal: {{PROJECT_GOAL}}
+updated_at: {{CREATED_AT}}
+nodes: []
+edges: []
+candidate_edges: []

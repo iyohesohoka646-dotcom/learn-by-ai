@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "name": "learn-by-ai",
+  "display_name": "Learn by AI — An Adaptive Learning Skill",
+  "version": "1.0.0",
+  "entrypoint": "skill/learn-by-ai/SKILL.md",
+  "license": "MIT",
+  "runtime_dependencies": [],
+  "optional_runtime": {
+    "python": ">=3.9"
+  }
+}

@@ -1,0 +1,12 @@
+schema_version: "0.1"
+updated_at: {{CREATED_AT}}
+role_vocabulary:
+  - "primary"
+  - "rigorous-deepening"
+  - "problem-bank"
+  - "exam"
+  - "application"
+  - "code"
+  - "notes"
+resources: []
+unavailable_resources: []
