@@ -1,0 +1,20 @@
+schema_version: "0.1"
+project_id: "probability-distribution-demo"
+name: "Probability distribution demo"
+goal: "Independently distinguish random variables, distributions, densities, and point probabilities, then apply them in simulation."
+target_depth: "engineering"
+status: "active"
+created_at: "2026-08-18T08:00:00Z"
+updated_at: "2026-08-18T08:25:00Z"
+graph_version: "0.1"
+current_node: "probability.distribution.density-vs-probability"
+timeline:
+  target_date: null
+constraints: []
+session:
+  default_minutes: 60
+  effective_minutes_completed: 25
+settings:
+  mastery_scale: "0-4"
+  require_observable_evidence: true
+  store_source_locators_not_full_text: true

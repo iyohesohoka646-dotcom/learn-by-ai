@@ -1,0 +1,25 @@
+name: Feature request
+description: Propose a concrete improvement to the adaptive learning workflow.
+title: "[Idea]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Learning problem
+      description: Describe the real learning failure or friction this should address.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Example or evidence
+      description: Include a minimal, privacy-safe scenario.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+    validations:
+      required: true
