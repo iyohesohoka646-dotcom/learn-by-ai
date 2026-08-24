@@ -38,11 +38,15 @@ For each material, record:
   searchable: true
   coverage: [candidate topics]
   preferred_for: [definitions, course spine]
+  teaching_authority: true
+  locator_precision: section
   limitations: []
   last_checked: "2026-08-17"
 ```
 
 Valid roles include `primary`, `rigorous-deepening`, `problem-bank`, `exam`, `application`, `code`, and `notes`.
+
+Use `teaching_authority: true` for the accessible source that should govern sequence, notation, definitions, and standard methods. Use `locator_precision` values such as `page`, `section`, or `topic` to prevent false precision. Normally only one source has teaching authority for a node; other sources retain their specialist roles.
 
 When a resource is mentioned but not provided or cannot be opened, keep a minimal entry in `resources` so its intended role is not lost, and add a matching failure record:
 

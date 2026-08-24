@@ -13,6 +13,8 @@ resources:
     searchable: true
     coverage: [random variables, distributions, densities]
     preferred_for: [notation, course spine]
+    teaching_authority: true
+    locator_precision: section
     limitations: [no simulation examples]
     last_checked: "2026-08-18"
 unavailable_resources:

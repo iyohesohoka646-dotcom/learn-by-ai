@@ -50,9 +50,11 @@ The skill then:
 1. indexes accessible materials by role instead of loading everything;
 2. asks a compact diagnostic question;
 3. builds only the relevant knowledge graph and prerequisites;
-4. chooses whether to advance, refine, remediate, or review;
-5. records observable evidence rather than trusting “I understand”;
-6. writes a checkpoint with exactly one opening question for the next session.
+4. anchors teaching to the selected textbook or notes and reports verified locators;
+5. teaches through complete explanation, guided derivation, and independent transfer;
+6. chooses whether to advance, refine, remediate, or review;
+7. records observable evidence rather than trusting “I understand”;
+8. writes a checkpoint with exactly one opening question for the next session.
 
 At the next conversation, the agent loads the checkpoint and continues from the unresolved reasoning step—not from a generic onboarding interview.
 
@@ -62,10 +64,11 @@ Explore the complete sample project: [`examples/probability-distribution`](examp
 
 | Typical AI tutoring | Learn by AI |
 |---|---|
-| Explains the requested topic | Selects the next goal-relevant node |
+| Explains the requested topic | Selects the next goal-relevant node and teaches it fully |
 | Treats “I understand” as progress | Requires observable mastery evidence |
 | Repeats longer explanations after errors | Locates and repairs the earliest breakpoint |
-| Loads materials opportunistically | Routes sources by explicit roles and locators |
+| Loads materials opportunistically | Anchors teaching to a primary source and routes supplements by role |
+| Gives exercises as the lesson | Uses complete teaching → guided derivation → independent transfer |
 | Depends on chat memory | Commits durable, human-readable learning state |
 | Starts over in a new conversation | Resumes from one precise checkpoint question |
 
@@ -75,8 +78,10 @@ Explore the complete sample project: [`examples/probability-distribution`](examp
 flowchart LR
     A["Goal + materials"] --> B["Diagnostic"]
     B --> C["Sparse knowledge graph"]
-    C --> D["Teach one conceptual step"]
-    D --> E["Collect evidence"]
+    C --> D["Source-anchored complete teaching"]
+    D --> D2["Guided derivation"]
+    D2 --> D3["Independent transfer"]
+    D3 --> E["Collect evidence"]
     E --> F{"Decision"}
     F -->|ready| G["Advance"]
     F -->|breakpoint| H["Refine"]
@@ -143,7 +148,7 @@ python scripts/build_release.py
 <details>
 <summary>展开中文说明</summary>
 
-Learn by AI 是一个面向通用 AI Agent 的长期自适应学习 Skill。它不会只生成一份静态学习计划，而是根据学习目标、资料、诊断回答和历史证据，在每个节点决定继续、细化、补先修或复习。
+Learn by AI 是一个面向通用 AI Agent 的长期自适应学习 Skill。它会以用户指定教材或资料为教学主线，按“完整讲授→共同推导→独立迁移”推进，并根据学习目标、诊断回答和历史证据决定继续、细化、补先修或复习。
 
 它特别适合：系统课程、教材驱动学习、苏格拉底式教学、分层练习、长期复习，以及需要跨会话准确续接的学习项目。一次性事实问答或单题求解默认不会启动完整协议。
 
