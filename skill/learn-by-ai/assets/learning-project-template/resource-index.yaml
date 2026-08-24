@@ -10,3 +10,7 @@ role_vocabulary:
   - "notes"
 resources: []
 unavailable_resources: []
+
+# For each resource, set teaching_authority: true only when it should govern
+# sequence, notation, definitions, and standard methods. Record locator_precision
+# as page, section, or topic so future teaching does not claim false precision.

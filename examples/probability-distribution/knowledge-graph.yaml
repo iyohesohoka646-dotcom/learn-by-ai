@@ -1,0 +1,33 @@
+schema_version: "0.1"
+graph_version: "0.1"
+goal: "Distinguish distributions and densities, then apply them in simulation."
+updated_at: "2026-08-18T08:25:00Z"
+nodes:
+  - id: "probability.random-variable"
+    name: "Random variable"
+    type: "concept"
+    summary: "A measurable mapping from outcomes to a value space."
+    learning_objectives:
+      - "Identify the input, output, and role of a random variable."
+    prerequisites: []
+    target_depth: "application"
+    goal_weight: "high"
+    confidence: "high"
+  - id: "probability.distribution.density-vs-probability"
+    name: "Density versus probability"
+    type: "concept"
+    summary: "A density value is not generally a probability; interval probability is obtained by integration."
+    learning_objectives:
+      - "Explain why a continuous density may exceed one without violating probability axioms."
+      - "Compute and interpret interval probability from a density."
+    prerequisites: [probability.random-variable]
+    target_depth: "derivation-and-application"
+    goal_weight: "high"
+    confidence: "high"
+edges:
+  - type: "prerequisite-of"
+    source: "probability.random-variable"
+    target: "probability.distribution.density-vs-probability"
+    provenance: "diagnostic"
+    confidence: "high"
+candidate_edges: []

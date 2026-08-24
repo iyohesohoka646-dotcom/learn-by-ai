@@ -1,7 +1,7 @@
 interface:
   display_name: "Learn by AI"
-  short_description: "Evidence-led adaptive learning across sessions"
-  default_prompt: "Use $learn-by-ai to initialize or continue a structured learning project from my goals, materials, and progress."
+  short_description: "Source-anchored adaptive teaching across sessions"
+  default_prompt: "Use $learn-by-ai to initialize or continue a source-anchored learning project. Teach each new concept before guided derivation and independent transfer, then preserve evidence and progress."
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.svg"
 policy:

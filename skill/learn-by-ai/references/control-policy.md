@@ -42,16 +42,41 @@ Do not follow textbook page order mechanically. Do not skip a prerequisite becau
 
 Filter the resource index first, then open only the relevant locator. If the preferred source is unavailable, name the failure and either use a labeled substitute or stop when fidelity matters.
 
-## Teach one conceptual step
+### Establish teaching authority
 
-1. Present a concrete tension, prediction, counterexample, or application.
-2. Ask for a discriminating judgment before explaining.
-3. Identify what the learner's current concepts cannot yet resolve.
-4. Define the new object, domain/codomain, notation, and assumptions.
-5. Derive the core mechanism from the motivating problem.
-6. Work one minimal example.
-7. Connect one use case and one failure mode.
-8. Ask a transfer check; do not end with only “Do you understand?”
+For each active node, distinguish the source that governs teaching from sources that deepen or test it:
+
+- The `primary` source governs sequence, notation, definitions, theorem framing, and standard methods when accessible.
+- `rigorous-deepening` adds precise assumptions, proofs, and boundary conditions.
+- `problem-bank` and `exam` supply practice patterns, counterexamples, and transfer tasks; they do not become the teaching spine merely because they contain exercises.
+- `application`, `code`, and `notes` connect the concept to use, implementation, or the learner's local conventions.
+
+Before teaching, give a compact source declaration: source title, verified chapter/section or topic locator, content to be taught, and each supplement's purpose. A locator is exact only when verified from the accessible material. If only a topic-level match is verified, cite the topic and say that the exact page or numbering is unverified. Label model-created material as `teacher-created` and material synthesized across sources as `teacher-integrated`.
+
+## Run a teach–guide–transfer cycle
+
+Use the following default cycle for a new concept; adapt its length to the learner and remaining session capacity without removing the initial teaching phase.
+
+### Phase 1: complete teaching
+
+1. Establish motivation with a concrete tension, prediction, counterexample, or application.
+2. Define the object, domain/codomain, notation, and assumptions in the primary source's framing.
+3. Derive or explain the mechanism, including why the conditions matter.
+4. Work one complete example.
+5. Contrast it with one near case, boundary, or failure mode.
+6. Ask one compact teaching check that reveals whether the explanation connected.
+
+An opening prediction may precede the explanation, but it is diagnostic evidence and does not replace teaching.
+
+### Phase 2: guided derivation
+
+Give the overall structure, preserve the meaningful decision for the learner, and ask for one coherent derivation or explanation. If the learner stalls, repair only the earliest breakpoint and return control at the next meaningful step.
+
+### Phase 3: independent transfer
+
+Choose a medium-to-hard task from a verified source when available, or label it `teacher-integrated`. Change a condition, representation, context, or method choice so that the task tests transfer rather than imitation. Require an independent chain of reasoning and record any hints.
+
+Across successive cycles, distribute difficulty rather than repeatedly using easy checks: normally move from medium to medium-hard to difficult/integrated as evidence permits. Keep a task as one connected prompt; split it only after locating a specific breakpoint. At the end of the three phases or a natural stop, report current node, cycle progress, evidence, uncertainty, earliest breakpoint, and the next action, then commit state at the applicable boundary.
 
 ## Classify the earliest breakpoint
 

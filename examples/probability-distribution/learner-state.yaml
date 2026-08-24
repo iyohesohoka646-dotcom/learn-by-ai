@@ -1,0 +1,36 @@
+schema_version: "0.1"
+updated_at: "2026-08-18T08:25:00Z"
+learner_profile:
+  stated_background: [routine probability calculations]
+  preferences: [worked examples, simulation]
+  constraints: []
+diagnostic:
+  status: "complete"
+  capability_anchors: [probability.random-variable]
+  critical_breakpoints: [density-as-probability]
+  unknown_nodes: [probability.distribution.transfer-to-simulation]
+node_states:
+  - node_id: "probability.distribution.density-vs-probability"
+    learning_status: "learning"
+    mastery:
+      conceptual: 1
+      derivation: 0
+      standard_problem: 2
+      transfer: 0
+      application: 0
+      oral_expression: 1
+      retention: 0
+    evidence_strength: "low"
+    attempt_refs: [attempt-demo-001]
+    error_profile:
+      object-confusion:
+        count: 1
+        last_seen: "2026-08-18T08:20:00Z"
+    hint_dependency:
+      highest_recent_level: 0
+      recent_count: 0
+    review_due: null
+    blocked_by: []
+    recommended_action: "minimal-contrast-and-near-transfer"
+due_reviews: []
+active_blockers: []

@@ -5,6 +5,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 
@@ -37,6 +38,34 @@ class PackageTests(unittest.TestCase):
         manifest = json.loads((ROOT / "skill-package.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["name"], "learn-by-ai")
         self.assertTrue((ROOT / manifest["entrypoint"]).is_file())
+
+    def test_release_archive_has_skill_folder_at_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "learn-by-ai.skill"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "scripts" / "build_release.py"),
+                    "--output",
+                    str(output),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            with zipfile.ZipFile(output) as archive:
+                names = set(archive.namelist())
+            self.assertIn("learn-by-ai/SKILL.md", names)
+            self.assertNotIn("SKILL.md", names)
+
+    def test_demo_project_is_complete_and_parseable(self) -> None:
+        demo = ROOT / "examples" / "probability-distribution"
+        self.assertTrue(STATE_FILES.issubset({path.name for path in demo.iterdir()}))
+        for name in STATE_FILES:
+            self.assertNotIn("{{", (demo / name).read_text(encoding="utf-8"))
+        for line in (demo / "evidence.jsonl").read_text(encoding="utf-8").splitlines():
+            json.loads(line)
 
     def test_generic_installer_copies_and_refuses_overwrite(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

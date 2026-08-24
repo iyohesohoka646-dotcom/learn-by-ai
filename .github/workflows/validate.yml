@@ -21,3 +21,5 @@ jobs:
           python-version: "3.11"
       - name: Run package tests
         run: python -m unittest discover -s tests -v
+      - name: Build uploadable skill package
+        run: python scripts/build_release.py

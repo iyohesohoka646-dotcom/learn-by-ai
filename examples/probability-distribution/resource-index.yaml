@@ -1,0 +1,25 @@
+schema_version: "0.1"
+updated_at: "2026-08-18T08:25:00Z"
+role_vocabulary: [primary, rigorous-deepening, problem-bank, application, notes]
+resources:
+  - id: "learner-notes"
+    title: "Learner's probability notes"
+    kind: "notes"
+    role: "primary"
+    path_or_url: "./materials/probability-notes.pdf"
+    version: "unknown"
+    language: "en"
+    accessibility: "accessible"
+    searchable: true
+    coverage: [random variables, distributions, densities]
+    preferred_for: [notation, course spine]
+    teaching_authority: true
+    locator_precision: section
+    limitations: [no simulation examples]
+    last_checked: "2026-08-18"
+unavailable_resources:
+  - resource_id: "referenced-textbook"
+    reason: "not-provided"
+    blocks: [source-aligned-exercise-locators]
+    checked_at: "2026-08-18"
+    next_action: "ask-for-file-or-use-labeled-substitute"

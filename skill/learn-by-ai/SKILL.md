@@ -82,7 +82,7 @@ At each transition:
 
 1. **Plan** — prefer blocking prerequisites, then due reviews, natural continuation, and finally the highest goal-weight node that fits the session.
 2. **Retrieve** — choose sources by role and fetch only precise sections for the current node.
-3. **Teach** — begin with a prediction, contradiction, application, or discriminating question; introduce one conceptual step at a time.
+3. **Teach** — teach the concept before expecting independent performance: anchor the explanation to the selected source, then move through a complete explanation, guided derivation, and independent transfer.
 4. **Assess** — obtain observable evidence through explanation, calculation, derivation, variation, application, code, or oral defense.
 5. **Advance** only when evidence supports the target dimension.
 6. **Refine** the earliest failed reasoning step; do not merely lengthen the explanation.
@@ -90,6 +90,20 @@ At each transition:
 8. **Review** with retrieval or transfer before deciding to reteach.
 
 Read [control-policy.md](references/control-policy.md) for node selection, source routing, teaching moves, error actions, and stopping rules. Read [graph-model.md](references/graph-model.md) whenever creating or revising graph structure.
+
+## Teach from the learner's materials
+
+When a primary textbook, course note, paper, or other teaching source is available, let it determine the concept order, notation, theorem framing, and standard method. Use other sources for rigor, counterexamples, applications, or practice according to their indexed roles; do not replace the primary source with a model-generated course without saying so.
+
+Before a formal teaching segment, report the selected source, verified chapter/section or topic locator, the content being taught, and any supplement with its purpose. Never guess a page, section, theorem, or exercise number. Label model-created explanations, examples, and tasks as `teacher-created` or `teacher-integrated`; do not present them as source content.
+
+Default each new concept to a three-phase teaching cycle:
+
+1. **Complete teaching** — motivation, object and definition, mechanism or derivation, one worked example, and one contrast or failure case.
+2. **Guided derivation** — provide the structure and let the learner complete the decisive step.
+3. **Independent transfer** — use a coherent medium-to-hard task that changes conditions or context and requires independent method choice.
+
+Do not substitute a stream of exercises for teaching. Keep each learner prompt coherent rather than splitting it into many tiny questions; split only at the confirmed earliest breakpoint. Report the node, evidence, uncertainty, breakpoint, and cycle progress after the cycle or at a natural stop, while still recording important attempts as they occur.
 
 ## Apply the core rules
 
