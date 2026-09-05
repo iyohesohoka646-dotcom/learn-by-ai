@@ -79,25 +79,59 @@ Explore the complete sample project: [`examples/probability-distribution`](examp
 ## How the learning loop works
 
 ```mermaid
-flowchart LR
-    A["Goal + materials"] --> B["Diagnostic"]
-    B --> C["Sparse knowledge graph"]
-    C --> R["Master corpus + targeted research"]
-    R --> P["Bounded lesson contract"]
-    P --> D["Source-anchored complete teaching"]
-    D --> D2["Guided derivation"]
-    D2 --> D3["Independent transfer"]
-    D3 --> E["Collect evidence"]
-    E --> F{"Decision"}
-    F -->|ready| G["Advance"]
-    F -->|breakpoint| H["Refine"]
-    F -->|missing prerequisite| I["Remediate"]
-    F -->|due or forgotten| J["Review"]
-    G --> K["Commit checkpoint"]
-    H --> D
-    I --> D
-    J --> D
-    K --> L["Resume next session"]
+flowchart TB
+    START(["Goal + materials"]) --> DIAG["Adaptive diagnostic"]
+    DIAG --> GRAPH[("Sparse knowledge graph")]
+
+    subgraph PREP["1 · Prepare the lesson"]
+        direction LR
+        CORPUS["Search master corpus"] --> RESEARCH["Fill named research gaps"]
+        RESEARCH --> CONTRACT["Freeze a bounded lesson contract"]
+    end
+
+    subgraph TEACH["2 · Teach for transfer"]
+        direction LR
+        EXPLAIN["Complete teaching"] --> GUIDE["Guided derivation"]
+        GUIDE --> TRANSFER["Independent transfer"]
+    end
+
+    subgraph ADAPT["3 · Adapt from evidence"]
+        direction TB
+        EVIDENCE["Collect observable evidence"] --> DECIDE{"What does the evidence say?"}
+        DECIDE -->|Ready| ADVANCE["Advance"]
+        DECIDE -->|Breakpoint| REFINE["Refine"]
+        DECIDE -->|Prerequisite gap| REMEDIATE["Remediate"]
+        DECIDE -->|Due or forgotten| REVIEW["Review"]
+    end
+
+    GRAPH --> CORPUS
+    CONTRACT --> EXPLAIN
+    TRANSFER --> EVIDENCE
+    REFINE -. targeted repair .-> EXPLAIN
+    REMEDIATE -. shortest prerequisite .-> EXPLAIN
+    REVIEW -. retrieval first .-> EXPLAIN
+    ADVANCE --> COMMIT["Commit evidence + checkpoint"]
+    COMMIT --> RESUME(["Resume precisely next session"])
+
+    classDef entry fill:#EEF2FF,stroke:#4F46E5,color:#312E81,stroke-width:2px;
+    classDef prep fill:#ECFEFF,stroke:#0891B2,color:#164E63,stroke-width:1.5px;
+    classDef teach fill:#F0FDF4,stroke:#16A34A,color:#14532D,stroke-width:1.5px;
+    classDef evidence fill:#FFF7ED,stroke:#EA580C,color:#7C2D12,stroke-width:1.5px;
+    classDef decision fill:#FEFCE8,stroke:#CA8A04,color:#713F12,stroke-width:2px;
+    classDef action fill:#FAF5FF,stroke:#9333EA,color:#581C87,stroke-width:1.5px;
+    classDef finish fill:#F8FAFC,stroke:#475569,color:#0F172A,stroke-width:2px;
+
+    class START,DIAG,GRAPH entry;
+    class CORPUS,RESEARCH,CONTRACT prep;
+    class EXPLAIN,GUIDE,TRANSFER teach;
+    class EVIDENCE evidence;
+    class DECIDE decision;
+    class ADVANCE,REFINE,REMEDIATE,REVIEW action;
+    class COMMIT,RESUME finish;
+
+    style PREP fill:#F8FAFC,stroke:#A5F3FC,stroke-width:1px
+    style TEACH fill:#F8FAFC,stroke:#BBF7D0,stroke-width:1px
+    style ADAPT fill:#F8FAFC,stroke:#FED7AA,stroke-width:1px
 ```
 
 ## Durable learning state
