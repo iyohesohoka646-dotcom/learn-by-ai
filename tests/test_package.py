@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -39,6 +40,13 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(manifest["name"], "learn-by-ai")
         self.assertTrue((ROOT / manifest["entrypoint"]).is_file())
 
+    def test_skill_reference_links_resolve(self) -> None:
+        text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+        links = re.findall(r"\[[^\]]+\]\((references/[^)]+)\)", text)
+        self.assertTrue(links)
+        for link in links:
+            self.assertTrue((SKILL / link).is_file(), link)
+
     def test_release_archive_has_skill_folder_at_root(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / "learn-by-ai.skill"
@@ -57,6 +65,7 @@ class PackageTests(unittest.TestCase):
             with zipfile.ZipFile(output) as archive:
                 names = set(archive.namelist())
             self.assertIn("learn-by-ai/SKILL.md", names)
+            self.assertIn("learn-by-ai/references/retrieval-and-planning.md", names)
             self.assertNotIn("SKILL.md", names)
 
     def test_demo_project_is_complete_and_parseable(self) -> None:

@@ -1,7 +1,7 @@
 interface:
   display_name: "Learn by AI"
-  short_description: "Source-anchored adaptive teaching across sessions"
-  default_prompt: "Use $learn-by-ai to initialize or continue a source-anchored learning project. Teach each new concept before guided derivation and independent transfer, then preserve evidence and progress."
+  short_description: "Research-grounded adaptive teaching across sessions"
+  default_prompt: "Use $learn-by-ai to initialize or continue an adaptive learning project. Before teaching a new unit, search the indexed master documents, add targeted papers or strong explanatory sources, freeze a bounded lesson contract, then teach, assess, and preserve progress."
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.svg"
 policy:

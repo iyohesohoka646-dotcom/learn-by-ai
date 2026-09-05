@@ -29,6 +29,8 @@ Apply these gates in order:
 
 Do not follow textbook page order mechanically. Do not skip a prerequisite because a later node appears more advanced or interesting.
 
+Before a new node is taught, follow [retrieval-and-planning.md](retrieval-and-planning.md) to search the master corpus, fill named gaps through targeted external research, and freeze a bounded lesson contract. Reuse that contract during normal follow-up turns; reopen research only when a source conflict, outdated claim, or newly exposed prerequisite could change the lesson.
+
 ## Route sources by need
 
 | Need | Preferred role |
@@ -120,4 +122,4 @@ After two failures at the same breakpoint, add no new knowledge. Reduce the task
 - **Node pause:** a natural stage ends or a prerequisite detour begins. Preserve the current node.
 - **Session stop:** the planned package/time is complete at a natural boundary; the user asks to stop, summarize, or switch; the request is one-off; material essential to the current action is inaccessible; or the rest belongs in a separate prerequisite unit. Missing source files do not prevent a goal-based diagnostic when no source-specific claim is required.
 
-At session stop, teach nothing new. Commit evidence and state, then provide a compact summary and the unique next opening question.
+At session stop, teach nothing new. Commit evidence and state, including the current lesson contract, source pack, research gaps, and deferred topics when they matter, then provide a compact summary and the unique next opening question.

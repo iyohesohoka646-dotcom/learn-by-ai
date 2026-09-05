@@ -50,11 +50,13 @@ The skill then:
 1. indexes accessible materials by role instead of loading everything;
 2. asks a compact diagnostic question;
 3. builds only the relevant knowledge graph and prerequisites;
-4. anchors teaching to the selected textbook or notes and reports verified locators;
-5. teaches through complete explanation, guided derivation, and independent transfer;
-6. chooses whether to advance, refine, remediate, or review;
-7. records observable evidence rather than trusting “I understand”;
-8. writes a checkpoint with exactly one opening question for the next session.
+4. searches the indexed master documents and extracts only the relevant sections;
+5. adds targeted papers, official references, or strong explanatory sources;
+6. freezes a bounded, flexible lesson contract with completion and stopping conditions;
+7. teaches through complete explanation, guided derivation, and independent transfer;
+8. chooses whether to advance, refine, remediate, or review;
+9. records observable evidence rather than trusting “I understand”;
+10. writes a checkpoint with exactly one opening question for the next session.
 
 At the next conversation, the agent loads the checkpoint and continues from the unresolved reasoning step—not from a generic onboarding interview.
 
@@ -68,6 +70,8 @@ Explore the complete sample project: [`examples/probability-distribution`](examp
 | Treats “I understand” as progress | Requires observable mastery evidence |
 | Repeats longer explanations after errors | Locates and repairs the earliest breakpoint |
 | Loads materials opportunistically | Anchors teaching to a primary source and routes supplements by role |
+| Searches indefinitely or cites whatever appears first | Searches the master corpus first, fills named gaps, then freezes a source pack |
+| Uses a fixed script or lets the lesson sprawl | Uses a flexible lesson contract with explicit completion and detour rules |
 | Gives exercises as the lesson | Uses complete teaching → guided derivation → independent transfer |
 | Depends on chat memory | Commits durable, human-readable learning state |
 | Starts over in a new conversation | Resumes from one precise checkpoint question |
@@ -78,7 +82,9 @@ Explore the complete sample project: [`examples/probability-distribution`](examp
 flowchart LR
     A["Goal + materials"] --> B["Diagnostic"]
     B --> C["Sparse knowledge graph"]
-    C --> D["Source-anchored complete teaching"]
+    C --> R["Master corpus + targeted research"]
+    R --> P["Bounded lesson contract"]
+    P --> D["Source-anchored complete teaching"]
     D --> D2["Guided derivation"]
     D2 --> D3["Independent transfer"]
     D3 --> E["Collect evidence"]
@@ -113,7 +119,7 @@ The skill stores summaries and source locators—not copyrighted textbooks or en
 ## Compatibility and trust
 
 - Portable `SKILL.md` format with only the required `name` and `description` frontmatter.
-- No model, API, MCP server, database, vector store, telemetry, or network dependency.
+- No dedicated model, API, MCP server, database, vector store, or telemetry dependency; external research uses the host agent's existing search tools and degrades transparently when unavailable.
 - Human-readable state; users can inspect, edit, archive, or delete it at any time.
 - Non-destructive initializer and installer; both refuse to overwrite existing state.
 - Windows, macOS, and Linux validation on every push.
@@ -148,7 +154,7 @@ python scripts/build_release.py
 <details>
 <summary>展开中文说明</summary>
 
-Learn by AI 是一个面向通用 AI Agent 的长期自适应学习 Skill。它会以用户指定教材或资料为教学主线，按“完整讲授→共同推导→独立迁移”推进，并根据学习目标、诊断回答和历史证据决定继续、细化、补先修或复习。
+Learn by AI 是一个面向通用 AI Agent 的长期自适应学习 Skill。每个新教学单元会先检索项目总文档，再针对明确缺口补充论文、官方资料或优质博客，并形成带完成条件和停止边界的弹性教学计划；随后以“完整讲授→共同推导→独立迁移”推进，根据学习证据调整路线。
 
 它特别适合：系统课程、教材驱动学习、苏格拉底式教学、分层练习、长期复习，以及需要跨会话准确续接的学习项目。一次性事实问答或单题求解默认不会启动完整协议。
 
