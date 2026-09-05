@@ -20,11 +20,21 @@
 
 - Used this session: none
 - Resource-index changes needed: register and role-label available materials
+- External research gaps: unknown until the first bounded source search
+
+## Lesson contract
+
+- Observable outcome: select after diagnostic
+- Included / deferred scope: select after diagnostic
+- Completion evidence: select after diagnostic
+- Capacity boundary: use the configured session length and stop at a natural boundary
+- Active detour: none
 
 ## Next action
 
 - Build a sparse goal-aligned graph from the goal and accessible material structure.
 - Run a compact adaptive diagnostic.
+- Before teaching the selected node, search the master corpus, run targeted external research, and freeze the first lesson contract.
 - Next node: select after diagnostic.
 
 ## Unique opening question

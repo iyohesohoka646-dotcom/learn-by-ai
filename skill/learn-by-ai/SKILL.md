@@ -68,28 +68,36 @@ Orient the learner in four short items before continuing: current node, unresolv
 Use this state machine for every formal session:
 
 ```text
-Load -> Orient -> Plan -> Retrieve -> Teach -> Assess
-                                  ^          |
-                                  |          +-> Advance
-                                  |          +-> Refine
-                                  |          +-> Remediate
-                                  |          +-> Review
-                                  +----------+
+Load -> Orient -> Frame -> Search corpus -> Research -> Freeze plan -> Teach -> Assess
+                                                                         ^          |
+                                                                         |          +-> Advance
+                                                                         |          +-> Refine
+                                                                         |          +-> Remediate
+                                                                         |          +-> Review
+                                                                         +----------+
 Assess/Teach -> Stop -> Commit
 ```
 
 At each transition:
 
-1. **Plan** — prefer blocking prerequisites, then due reviews, natural continuation, and finally the highest goal-weight node that fits the session.
-2. **Retrieve** — choose sources by role and fetch only precise sections for the current node.
-3. **Teach** — teach the concept before expecting independent performance: anchor the explanation to the selected source, then move through a complete explanation, guided derivation, and independent transfer.
-4. **Assess** — obtain observable evidence through explanation, calculation, derivation, variation, application, code, or oral defense.
-5. **Advance** only when evidence supports the target dimension.
-6. **Refine** the earliest failed reasoning step; do not merely lengthen the explanation.
-7. **Remediate** the shortest missing prerequisite chain when the current node is blocked.
-8. **Review** with retrieval or transfer before deciding to reteach.
+1. **Frame** — choose the next node and define the observable outcome, scope, likely prerequisites, and a provisional boundary.
+2. **Search corpus** — search the indexed master documents first and extract only the relevant definitions, arguments, examples, and locators.
+3. **Research** — search authoritative papers, official material, or strong explanatory sources for current evidence, rigor, intuition, or applications that the corpus does not supply.
+4. **Freeze plan** — turn the source pack into a flexible lesson contract with a completion condition, budget, and detour rule.
+5. **Teach** — teach the concept before expecting independent performance: anchor the explanation to the source pack, then move through a complete explanation, guided derivation, and independent transfer.
+6. **Assess** — obtain observable evidence through explanation, calculation, derivation, variation, application, code, or oral defense.
+7. **Advance** only when evidence supports the target dimension.
+8. **Refine** the earliest failed reasoning step; do not merely lengthen the explanation.
+9. **Remediate** the shortest missing prerequisite chain when the current node is blocked.
+10. **Review** with retrieval or transfer before deciding to reteach.
 
-Read [control-policy.md](references/control-policy.md) for node selection, source routing, teaching moves, error actions, and stopping rules. Read [graph-model.md](references/graph-model.md) whenever creating or revising graph structure.
+Read [retrieval-and-planning.md](references/retrieval-and-planning.md) before preparing a new teaching unit or substantial reteach. Read [control-policy.md](references/control-policy.md) for node selection, source routing, teaching moves, error actions, and stopping rules. Read [graph-model.md](references/graph-model.md) whenever creating or revising graph structure.
+
+## Prepare a bounded teaching unit
+
+Before teaching a new node, search the project's indexed master documents for the relevant section, then run targeted external research when search tools are available. Build a small source pack that covers the planned claims, conditions, example, and assessment; preserve verified locators and label any unresolved conflict or access gap. Do not repeat research on every conversational turn or keep searching after additional sources have little chance of changing the lesson.
+
+Convert that source pack into a flexible lesson contract: observable outcome, prerequisite assumptions, included and deferred scope, conceptual arc, teaching and assessment moves, approximate budget, completion evidence, and detour rule. Adapt the contract when learner evidence changes the route, while keeping one active objective and one active prerequisite detour. End or checkpoint at the completion condition, the time boundary, or a natural split; place useful discoveries outside the current scope in a backlog.
 
 ## Teach from the learner's materials
 
@@ -169,6 +177,7 @@ Finish by telling the learner what was recorded, what remains uncertain, the nex
 ## Reference routing
 
 - Initialization, materials, diagnostic: [bootstrap-and-diagnostic.md](references/bootstrap-and-diagnostic.md)
+- Master-document retrieval, external research, and flexible lesson planning: [retrieval-and-planning.md](references/retrieval-and-planning.md)
 - Node/edge schema and route construction: [graph-model.md](references/graph-model.md)
 - Invocation, planning, teaching, refinement, stopping: [control-policy.md](references/control-policy.md)
 - Evidence schema, mastery updates, review, checkpoint: [evidence-and-state.md](references/evidence-and-state.md)

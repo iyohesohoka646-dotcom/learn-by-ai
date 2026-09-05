@@ -79,6 +79,8 @@ The checkpoint must be short enough to load first and complete enough to resume 
 - current node and learning status;
 - completed nodes with achieved depth;
 - sources used and exact locators;
+- the active lesson contract and whether its completion condition was met;
+- external research gaps, unresolved source conflicts, and deferred topics that could affect continuation;
 - new mastery evidence and its strength;
 - misconceptions, errors, and earliest breakpoint;
 - incomplete work and blockers;

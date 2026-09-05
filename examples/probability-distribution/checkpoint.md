@@ -20,10 +20,20 @@
 
 - Used this session: learner notes, density section
 - Unavailable: referenced textbook was not provided
+- External research gap: verify a clear authoritative treatment of point probability for continuous variables before the lesson
+
+## Lesson contract
+
+- Observable outcome: distinguish density height, point probability, and interval probability, then explain the distinction in a near-transfer case
+- Included scope: density values, singleton probability, interval probability; simulation deferred
+- Completion evidence: one correct numerical contrast and one independent explanation under changed values
+- Capacity boundary: one teach-guide-transfer cycle
+- Active detour: none
 
 ## Next action
 
 - Contrast density height, point probability, and interval probability with one minimal continuous example.
+- Search the indexed notes first, add one authoritative external source and one explanatory source if available, then freeze the source pack.
 - Ask for a near-transfer explanation before introducing simulation code.
 
 ## Unique opening question
