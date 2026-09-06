@@ -33,7 +33,15 @@ cd learn-by-ai
 python install.py --target <your-agent-skills-directory>
 ```
 
-Codex users can run `python install.py --codex`.
+Convenience targets are available for common clients:
+
+```text
+python install.py --agents    # shared ~/.agents/skills location
+python install.py --claude    # Claude Code
+python install.py --cursor    # Cursor
+python install.py --opencode  # OpenCode
+python install.py --codex     # Codex
+```
 
 ## See it in 30 seconds
 
@@ -47,16 +55,14 @@ then apply them independently in simulation and modeling.
 
 The skill then:
 
-1. indexes accessible materials by role instead of loading everything;
-2. asks a compact diagnostic question;
-3. builds only the relevant knowledge graph and prerequisites;
-4. searches the indexed master documents and extracts only the relevant sections;
-5. adds targeted papers, official references, or strong explanatory sources;
-6. freezes a bounded, flexible lesson contract with completion and stopping conditions;
-7. teaches through complete explanation, guided derivation, and independent transfer;
-8. chooses whether to advance, refine, remediate, or review;
-9. records observable evidence rather than trusting “I understand”;
-10. writes a checkpoint with exactly one opening question for the next session.
+1. searches the local project registry before creating anything;
+2. resumes one clear match or asks you to choose among parallel projects;
+3. indexes accessible materials and builds only the relevant graph neighborhood;
+4. searches the indexed master documents and fills named research gaps;
+5. freezes a bounded, flexible lesson contract with completion and stopping conditions;
+6. teaches through complete explanation, guided derivation, and independent transfer;
+7. chooses whether to advance, refine, remediate, or review;
+8. records observable evidence and writes a precise cross-session checkpoint.
 
 At the next conversation, the agent loads the checkpoint and continues from the unresolved reasoning step—not from a generic onboarding interview.
 
@@ -66,6 +72,8 @@ Explore the complete sample project: [`examples/probability-distribution`](examp
 
 | Typical AI tutoring | Learn by AI |
 |---|---|
+| Starts a duplicate course in a new chat | Finds the matching local project and resumes its checkpoint |
+| Guesses when several records look related | Shows paths, goals, dates, and current nodes for explicit selection |
 | Explains the requested topic | Selects the next goal-relevant node and teaches it fully |
 | Treats “I understand” as progress | Requires observable mastery evidence |
 | Repeats longer explanations after errors | Locates and repairs the earliest breakpoint |
@@ -150,10 +158,14 @@ learning-project/
 
 The skill stores summaries and source locators—not copyrighted textbooks or entire chapters.
 
+Cross-session discovery uses a small local registry at `$LEARN_BY_AI_HOME/projects.json` or `.learn-by-ai/projects.json` under the user home directory. Each entry stores a project name, aliases, goal, tags, verified absolute path, update time, and current node. Learning evidence remains in the project directory.
+
 ## Compatibility and trust
 
 - Portable `SKILL.md` format with only the required `name` and `description` frontmatter.
 - No dedicated model, API, MCP server, database, vector store, or telemetry dependency; external research uses the host agent's existing search tools and degrades transparently when unavailable.
+- Project discovery uses portable JSON and ordinary file operations; the bundled Python helper is optional.
+- Multiple matches use a native selector when available and a numbered text choice everywhere else.
 - Human-readable state; users can inspect, edit, archive, or delete it at any time.
 - Non-destructive initializer and installer; both refuse to overwrite existing state.
 - Windows, macOS, and Linux validation on every push.
@@ -161,10 +173,20 @@ The skill stores summaries and source locators—not copyrighted textbooks or en
 
 The installable runtime is [`skill/learn-by-ai`](skill/learn-by-ai). Optional OpenAI UI metadata is isolated in `agents/openai.yaml` and can be ignored by other clients.
 
+| Client | Verified discovery location | Compatibility basis |
+|---|---|---|
+| Agent Skills clients | client-selected skills root | Standard `SKILL.md`, `scripts/`, `references/`, and `assets/` layout |
+| Claude Code | `~/.claude/skills/learn-by-ai/` | Loads personal skills from `~/.claude/skills/` and supports bundled resources |
+| Cursor | `~/.agents/skills/learn-by-ai/` or `~/.cursor/skills/learn-by-ai/` | Discovers both shared and Cursor-specific skill roots |
+| OpenCode | `~/.agents/skills/learn-by-ai/` or `~/.config/opencode/skills/learn-by-ai/` | Discovers shared and OpenCode-specific skill roots |
+
+Current format references: [Agent Skills specification](https://agentskills.io/specification), [Claude Code skills](https://code.claude.com/docs/en/slash-commands), [Cursor skills](https://cursor.com/docs/skills), and [OpenCode skills](https://opencode.ai/docs/skills).
+
 ## Prompts to try
 
 ```text
 Use $learn-by-ai to design and run a six-week linear algebra learning program.
+Start my statistics learning; find the matching local project before teaching.
 Use $learn-by-ai to continue from my saved checkpoint and test the due review first.
 Use $learn-by-ai with these three textbooks, choosing each source by its role.
 用 $learn-by-ai 根据我的目标和资料开始诊断，不要把“我懂了”直接当成掌握证据。
@@ -188,7 +210,7 @@ python scripts/build_release.py
 <details>
 <summary>展开中文说明</summary>
 
-Learn by AI 是一个面向通用 AI Agent 的长期自适应学习 Skill。每个新教学单元会先检索项目总文档，再针对明确缺口补充论文、官方资料或优质博客，并形成带完成条件和停止边界的弹性教学计划；随后以“完整讲授→共同推导→独立迁移”推进，根据学习证据调整路线。
+Learn by AI 是一个面向通用 AI Agent 的长期自适应学习 Skill。新对话说“开始某某学习”时，它会先查询本机项目注册表并核验记录地址；单一匹配直接续接，多个匹配展示路径、目标、更新时间和当前节点供用户选择。每个新教学单元随后检索总文档、补充外部资料、制定弹性计划，并以“完整讲授→共同推导→独立迁移”推进。
 
 它特别适合：系统课程、教材驱动学习、苏格拉底式教学、分层练习、长期复习，以及需要跨会话准确续接的学习项目。一次性事实问答或单题求解默认不会启动完整协议。
 

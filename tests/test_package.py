@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -65,6 +66,8 @@ class PackageTests(unittest.TestCase):
             with zipfile.ZipFile(output) as archive:
                 names = set(archive.namelist())
             self.assertIn("learn-by-ai/SKILL.md", names)
+            self.assertIn("learn-by-ai/scripts/project_registry.py", names)
+            self.assertIn("learn-by-ai/references/project-discovery.md", names)
             self.assertIn("learn-by-ai/references/retrieval-and-planning.md", names)
             self.assertNotIn("SKILL.md", names)
 
@@ -87,9 +90,33 @@ class PackageTests(unittest.TestCase):
             self.assertEqual(second.returncode, 3)
             self.assertIn("refusing to overwrite", second.stderr)
 
+    def test_installer_resolves_supported_agent_locations(self) -> None:
+        expected_suffixes = {
+            "--agents": Path(".agents") / "skills" / "learn-by-ai",
+            "--claude": Path(".claude") / "skills" / "learn-by-ai",
+            "--cursor": Path(".cursor") / "skills" / "learn-by-ai",
+            "--opencode": Path(".config") / "opencode" / "skills" / "learn-by-ai",
+        }
+        for flag, suffix in expected_suffixes.items():
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "install.py"), flag, "--dry-run"],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            destination_line = next(
+                line for line in result.stdout.splitlines() if line.startswith("Destination:")
+            )
+            self.assertTrue(Path(destination_line.removeprefix("Destination:").strip()).is_absolute())
+            self.assertTrue(destination_line.endswith(str(suffix)), destination_line)
+
     def test_initializer_creates_valid_state_non_destructively(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             destination = Path(temporary) / "learning-project"
+            registry_home = Path(temporary) / "registry-home"
+            environment = os.environ.copy()
+            environment["LEARN_BY_AI_HOME"] = str(registry_home)
             command = [
                 sys.executable,
                 str(SKILL / "scripts" / "init_learning_project.py"),
@@ -102,8 +129,12 @@ class PackageTests(unittest.TestCase):
                 "engineering",
                 "--session-minutes",
                 "90",
+                "--alias",
+                "linear algebra",
+                "--tag",
+                "mathematics",
             ]
-            first = subprocess.run(command, capture_output=True, text=True, check=False)
+            first = subprocess.run(command, capture_output=True, text=True, check=False, env=environment)
             self.assertEqual(first.returncode, 0, first.stderr)
             self.assertEqual({path.name for path in destination.iterdir()}, STATE_FILES)
             for path in destination.iterdir():
@@ -111,9 +142,75 @@ class PackageTests(unittest.TestCase):
                 self.assertNotIn("{{", text)
             for line in (destination / "evidence.jsonl").read_text(encoding="utf-8").splitlines():
                 json.loads(line)
-            second = subprocess.run(command, capture_output=True, text=True, check=False)
+            registry = json.loads((registry_home / "projects.json").read_text(encoding="utf-8"))
+            self.assertEqual(len(registry["projects"]), 1)
+            self.assertEqual(Path(registry["projects"][0]["path"]), destination.resolve())
+
+            find = subprocess.run(
+                [
+                    sys.executable,
+                    str(SKILL / "scripts" / "project_registry.py"),
+                    "find",
+                    "linear algebra",
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+                env=environment,
+            )
+            self.assertEqual(find.returncode, 0, find.stderr)
+            matches = json.loads(find.stdout)
+            self.assertEqual([item["name"] for item in matches], ["线性代数学习"])
+
+            second = subprocess.run(command, capture_output=True, text=True, check=False, env=environment)
             self.assertEqual(second.returncode, 4)
             self.assertIn("refusing to overwrite", second.stderr)
+
+    def test_registry_returns_parallel_projects_for_selection(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            registry_home = Path(temporary) / "registry-home"
+            environment = os.environ.copy()
+            environment["LEARN_BY_AI_HOME"] = str(registry_home)
+            initializer = SKILL / "scripts" / "init_learning_project.py"
+            for folder, name, goal in (
+                ("statistics-foundation", "Statistics foundation", "Master probability and inference"),
+                ("statistics-research", "Statistics research", "Read modern high-dimensional statistics papers"),
+            ):
+                result = subprocess.run(
+                    [
+                        sys.executable,
+                        str(initializer),
+                        str(Path(temporary) / folder),
+                        "--name",
+                        name,
+                        "--goal",
+                        goal,
+                        "--alias",
+                        "statistics",
+                    ],
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                    env=environment,
+                )
+                self.assertEqual(result.returncode, 0, result.stderr)
+
+            find = subprocess.run(
+                [
+                    sys.executable,
+                    str(SKILL / "scripts" / "project_registry.py"),
+                    "find",
+                    "statistics",
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+                env=environment,
+            )
+            self.assertEqual(find.returncode, 0, find.stderr)
+            matches = json.loads(find.stdout)
+            self.assertEqual(len(matches), 2)
+            self.assertTrue(all(item["valid"] for item in matches))
 
 
 if __name__ == "__main__":

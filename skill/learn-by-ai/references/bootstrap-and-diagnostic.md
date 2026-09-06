@@ -6,9 +6,11 @@ Use this workflow after creating project files or when rebuilding an unreliable 
 
 Use this only when Python 3 is unavailable. Create the destination directory, copy the six files from `assets/learning-project-template/`, and replace every `{{UPPERCASE_MARKER}}` with a correctly escaped value. Use JSON double-quoted strings for YAML scalar markers; JSON strings are valid YAML scalars.
 
-Replace `PROJECT_ID`, `PROJECT_NAME`, `PROJECT_GOAL`, `TARGET_DEPTH`, `SESSION_MINUTES`, and `CREATED_AT` in the YAML/Markdown files. Replace the `_JSON` markers with valid JSON strings and create a unique `EVENT_ID_JSON` plus an ISO-8601 UTC `TIMESTAMP_JSON` in `evidence.jsonl`. Verify that no `{{...}}` marker remains and that every non-empty `evidence.jsonl` line is valid JSON.
+Replace `PROJECT_ID`, `PROJECT_NAME`, `PROJECT_GOAL`, `PROJECT_ALIASES`, `PROJECT_TAGS`, `TARGET_DEPTH`, `SESSION_MINUTES`, and `CREATED_AT` in the YAML/Markdown files. Use JSON arrays for aliases and tags. Replace the `_JSON` markers with valid JSON strings and create a unique `EVENT_ID_JSON` plus an ISO-8601 UTC `TIMESTAMP_JSON` in `evidence.jsonl`. Verify that no `{{...}}` marker remains and that every non-empty `evidence.jsonl` line is valid JSON.
 
 Refuse to overwrite any of the six state files. If a write fails after creating some files, remove only the files created by this attempt or report the partial state precisely; never delete pre-existing user files.
+
+After successful initialization, register the verified absolute project path as described in [project-discovery.md](project-discovery.md). If the registry is inaccessible, report the path and continue; the six project files remain authoritative.
 
 ## 1. Collect minimum context
 

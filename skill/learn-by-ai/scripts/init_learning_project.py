@@ -11,6 +11,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from project_registry import register_project
+
 
 STATE_FILES = (
     "project.yaml",
@@ -59,6 +61,27 @@ def parse_args() -> argparse.Namespace:
         default=120,
         help="Normal effective session length (default: 120)",
     )
+    parser.add_argument(
+        "--alias",
+        action="append",
+        default=[],
+        help="Alternate project name used for cross-session discovery; repeat as needed",
+    )
+    parser.add_argument(
+        "--tag",
+        action="append",
+        default=[],
+        help="Discovery tag; repeat as needed",
+    )
+    parser.add_argument(
+        "--registry",
+        help="Override the local projects.json path",
+    )
+    parser.add_argument(
+        "--no-register",
+        action="store_true",
+        help="Initialize project files without updating the cross-session registry",
+    )
     return parser.parse_args()
 
 
@@ -92,6 +115,8 @@ def main() -> int:
         "{{PROJECT_ID}}": yaml_string(slugify(project_name)),
         "{{PROJECT_NAME}}": yaml_string(project_name),
         "{{PROJECT_GOAL}}": yaml_string(args.goal),
+        "{{PROJECT_ALIASES}}": json.dumps(args.alias, ensure_ascii=False),
+        "{{PROJECT_TAGS}}": json.dumps(args.tag, ensure_ascii=False),
         "{{PROJECT_NAME_JSON}}": json.dumps(project_name, ensure_ascii=False),
         "{{PROJECT_GOAL_JSON}}": json.dumps(args.goal, ensure_ascii=False),
         "{{TARGET_DEPTH}}": yaml_string(args.depth),
@@ -137,6 +162,22 @@ def main() -> int:
     print(f"Initialized adaptive learning project: {destination}")
     for name in STATE_FILES:
         print(f"  - {name}")
+    if not args.no_register:
+        try:
+            path = register_project(
+                destination,
+                registry=args.registry,
+                name=project_name,
+                goal=args.goal,
+                aliases=args.alias,
+                tags=args.tag,
+            )
+            print(f"Registered project for cross-session discovery: {path}")
+        except Exception as exc:
+            print(
+                f"warning: project initialized, but registry update failed: {exc}",
+                file=sys.stderr,
+            )
     print("Next: index materials, build a sparse goal-aligned graph, and run a compact diagnostic.")
     return 0
 

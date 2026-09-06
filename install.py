@@ -30,6 +30,26 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Install into $CODEX_HOME/skills or ~/.codex/skills",
     )
+    destination.add_argument(
+        "--agents",
+        action="store_true",
+        help="Install into ~/.agents/skills for agents that support the shared location",
+    )
+    destination.add_argument(
+        "--claude",
+        action="store_true",
+        help="Install into ~/.claude/skills for Claude Code",
+    )
+    destination.add_argument(
+        "--cursor",
+        action="store_true",
+        help="Install into ~/.cursor/skills for Cursor",
+    )
+    destination.add_argument(
+        "--opencode",
+        action="store_true",
+        help="Install into ~/.config/opencode/skills for OpenCode",
+    )
     parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -44,23 +64,37 @@ def codex_skills_root() -> Path:
     return codex_home / "skills"
 
 
+def target_skills_root(args: argparse.Namespace) -> Path:
+    if args.codex:
+        return codex_skills_root()
+    if args.agents:
+        return Path.home() / ".agents" / "skills"
+    if args.claude:
+        return Path.home() / ".claude" / "skills"
+    if args.cursor:
+        return Path.home() / ".cursor" / "skills"
+    if args.opencode:
+        return Path.home() / ".config" / "opencode" / "skills"
+    return args.target.expanduser()
+
+
 def main() -> int:
     args = parse_args()
     if not (SOURCE / "SKILL.md").is_file():
         print(f"error: bundled skill is missing: {SOURCE}", file=sys.stderr)
         return 2
 
-    target_root = codex_skills_root() if args.codex else args.target.expanduser()
+    target_root = target_skills_root(args)
     destination = target_root.resolve() / SKILL_NAME
-
-    if destination.exists():
-        print(f"error: refusing to overwrite existing installation: {destination}", file=sys.stderr)
-        return 3
 
     print(f"Source: {SOURCE}")
     print(f"Destination: {destination}")
     if args.dry_run:
         return 0
+
+    if destination.exists():
+        print(f"error: refusing to overwrite existing installation: {destination}", file=sys.stderr)
+        return 3
 
     target_root.mkdir(parents=True, exist_ok=True)
     shutil.copytree(SOURCE, destination)
