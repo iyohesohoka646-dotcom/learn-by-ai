@@ -69,6 +69,7 @@ At a session boundary:
 3. Update static graph or resource metadata only if newly learned information changes them.
 4. Update project routing fields and timestamps.
 5. Write `checkpoint.md` last so it never claims a state update that failed.
+6. Refresh the cross-session registry entry after the project transaction succeeds. Preserve the project commit if registry refresh fails and report the discoverability gap.
 
 ## Checkpoint contract
 

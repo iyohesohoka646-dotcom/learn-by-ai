@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import shutil
+import sys
 import tempfile
 import zipfile
 from pathlib import Path
@@ -13,6 +14,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_NAME = "learn-by-ai"
 SOURCE = ROOT / "skill" / SKILL_NAME
+
+
+def configure_portable_stdio() -> None:
+    """Prevent narrow console encodings from crashing on archive paths."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure:
+            reconfigure(errors="backslashreplace")
 
 
 def parse_args() -> argparse.Namespace:
@@ -27,6 +36,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
+    configure_portable_stdio()
     args = parse_args()
     if not (SOURCE / "SKILL.md").is_file():
         raise SystemExit(f"error: missing {SOURCE / 'SKILL.md'}")

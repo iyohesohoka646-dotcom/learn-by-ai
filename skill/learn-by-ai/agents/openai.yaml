@@ -1,7 +1,7 @@
 interface:
   display_name: "Learn by AI"
-  short_description: "Research-grounded adaptive teaching across sessions"
-  default_prompt: "Use $learn-by-ai to initialize or continue an adaptive learning project. Before teaching a new unit, search the indexed master documents, add targeted papers or strong explanatory sources, freeze a bounded lesson contract, then teach, assess, and preserve progress."
+  short_description: "Reconnect and run adaptive learning projects"
+  default_prompt: "Use $learn-by-ai to find the local project matching my named subject before starting. If several projects match, let me choose; then resume its checkpoint, research the unit, teach adaptively, and preserve progress."
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.svg"
 policy:

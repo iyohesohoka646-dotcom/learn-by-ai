@@ -1,17 +1,36 @@
 ---
 name: learn-by-ai
-description: Run long-term, evidence-based adaptive learning from a learner's goals, uploaded materials, diagnostic answers, and prior progress. Use for systematic study plans, Socratic tutoring, layered practice, review, cross-session continuation, or maintaining a knowledge graph and learner record. Do not start the full protocol for a one-off fact question or isolated problem unless the user asks to add it to the learning record.
+description: Run long-term, evidence-based adaptive learning and reconnect named study requests to local project records across sessions. Use when a learner says to start, continue, or resume learning a subject; for systematic study plans, source-grounded teaching, layered practice, review, or maintaining a knowledge graph and learner record. Keep isolated questions outside the full protocol unless the learner requests tracking.
 ---
 
 # Learn by AI
 
 Use explicit project files as durable learning state. Treat the model's conversational memory as convenient context, never as the source of truth.
 
+## Resolve the learning project first
+
+When the learner says “start,” “continue,” “resume,” or “learn” a named subject without a path, search for its existing local project before choosing a mode or teaching. Read [project-discovery.md](references/project-discovery.md) and use this precedence:
+
+1. an explicit project path from the learner;
+2. the local Learn by AI project registry;
+3. a bounded search in the current workspace, relevant parents, and configured project roots;
+4. optional host project or conversation search when available.
+
+Verify all six state files before loading a candidate. If one project clearly matches, announce its absolute path and continue from its checkpoint. If several projects plausibly match, show a numbered choice with each name, path, goal, last update, and current node; wait for the learner to select one. Never combine parallel states or silently initialize a duplicate. If no valid match exists, offer to initialize a new project and state its proposed location.
+
+Use the bundled registry helper when Python 3 is available:
+
+```text
+<python-3> <skill-dir>/scripts/project_registry.py find "<named subject>"
+```
+
+The registry defaults to `$LEARN_BY_AI_HOME/projects.json` or `.learn-by-ai/projects.json` under the platform user home. If that location is inaccessible, use an explicit accessible registry path or a workspace-local fallback. Python is optional; agents may read and update the JSON registry with native file tools.
+
 ## Decide the operating mode
 
 Choose exactly one mode before teaching:
 
-1. **Initialize** — no learning project exists, or the user asks to start a systematic program.
+1. **Initialize** — discovery found no valid project and the learner confirms a new systematic program, or the learner explicitly requests a new project.
 2. **Continue** — a complete project exists and the user wants to resume, review, or be tested.
 3. **One-off** — answer normally without creating state when the request is isolated and the user did not ask to track it.
 
@@ -30,23 +49,19 @@ evidence.jsonl
 checkpoint.md
 ```
 
-Use a user-supplied project path first. Otherwise, search the current directory and its parents for `project.yaml`, then verify the five sibling files. Do not combine states from different directories.
+Project identity must already be resolved through the preceding discovery workflow. Do not combine states from different directories.
 
 For a new project, the observable learning goal is mandatory. Ask for missing target depth only when it materially changes the route; otherwise use `comprehensive` provisionally and label it as a default. Unknown time horizon, background, and unprovided materials may remain unknown rather than blocking initialization. Default to a 120-minute course package when session length is not specified.
 
 If a Python 3 launcher is available, run the bundled non-destructive initializer. Replace `<python-3>` with the platform's Python 3 command, such as `python3`, `python`, or `py -3`:
 
-```bash
-<python-3> <skill-dir>/scripts/init_learning_project.py <destination> \
-  --name "<project name>" \
-  --goal "<observable learning goal>" \
-  --depth <overview|exam|research|engineering|comprehensive> \
-  --session-minutes <minutes>
+```text
+<python-3> <skill-dir>/scripts/init_learning_project.py <destination> --name "<project name>" --goal "<observable learning goal>" --depth <overview|exam|research|engineering|comprehensive> --session-minutes <minutes>
 ```
 
 Do not require Python or a particular shell. When the platform cannot run the initializer, follow the scriptless initialization procedure in [bootstrap-and-diagnostic.md](references/bootstrap-and-diagnostic.md) using the agent's native file tools.
 
-The initializer refuses to overwrite any existing state file. If it reports a conflict, inspect the directory and ask whether to use a different destination; do not delete or replace files automatically.
+The initializer refuses to overwrite any existing state file and registers a successful project for cross-session discovery. If it reports a conflict, inspect the directory and ask whether to use a different destination; do not delete or replace files automatically. If registry writing fails, preserve the initialized project and tell the learner its absolute path.
 
 After initialization, read [bootstrap-and-diagnostic.md](references/bootstrap-and-diagnostic.md), index the available resources, create only the local graph needed for the current route, and run a compact adaptive diagnostic.
 
@@ -169,6 +184,7 @@ At a session boundary, commit in this order:
 2. Update `learner-state.yaml` from those events, preserving uncertainty and conflicting evidence.
 3. Update `knowledge-graph.yaml`, `resource-index.yaml`, or `project.yaml` only when structure, sources, goal, or route changed.
 4. Replace `checkpoint.md` last, after all other writes succeed.
+5. Refresh the local registry entry with the verified path, aliases, update time, and current node; a registry failure must not invalidate the project commit.
 
 The checkpoint must state completed nodes and depth, sources used, new evidence, misconceptions and first breakpoint, unfinished work, due reviews, blockers, next node, graph/index changes, and exactly one opening question for the next session.
 
@@ -176,6 +192,7 @@ Finish by telling the learner what was recorded, what remains uncertain, the nex
 
 ## Reference routing
 
+- Cross-session project lookup, disambiguation, and registry lifecycle: [project-discovery.md](references/project-discovery.md)
 - Initialization, materials, diagnostic: [bootstrap-and-diagnostic.md](references/bootstrap-and-diagnostic.md)
 - Master-document retrieval, external research, and flexible lesson planning: [retrieval-and-planning.md](references/retrieval-and-planning.md)
 - Node/edge schema and route construction: [graph-model.md](references/graph-model.md)

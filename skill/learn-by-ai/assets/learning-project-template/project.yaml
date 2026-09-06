@@ -2,6 +2,8 @@ schema_version: "0.1"
 project_id: {{PROJECT_ID}}
 name: {{PROJECT_NAME}}
 goal: {{PROJECT_GOAL}}
+aliases: {{PROJECT_ALIASES}}
+tags: {{PROJECT_TAGS}}
 target_depth: {{TARGET_DEPTH}}
 status: "initializing"
 created_at: {{CREATED_AT}}
