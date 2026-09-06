@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import re
+import sys
 import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -32,6 +33,14 @@ IGNORED_DIRECTORIES = {
     "node_modules",
     "vendor",
 }
+
+
+def configure_portable_stdio() -> None:
+    """Prevent narrow console encodings from crashing on project names and paths."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure:
+            reconfigure(errors="backslashreplace")
 
 
 def utc_now() -> str:
@@ -283,6 +292,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> int:
+    configure_portable_stdio()
     args = build_parser().parse_args()
     try:
         if args.command == "register":
@@ -295,7 +305,7 @@ def main() -> int:
                 tags=args.tag,
                 current_node=args.current_node,
             )
-            print(json.dumps({"registered": str(Path(args.path).expanduser().resolve()), "registry": str(path)}, ensure_ascii=False))
+            print(json.dumps({"registered": str(Path(args.path).expanduser().resolve()), "registry": str(path)}, ensure_ascii=True))
             return 0
         if args.command == "find":
             matches = find_projects(
@@ -305,7 +315,7 @@ def main() -> int:
                 max_depth=args.max_depth,
                 include_invalid=args.include_invalid,
             )
-            print(json.dumps(matches, ensure_ascii=False, indent=2))
+            print(json.dumps(matches, ensure_ascii=True, indent=2))
             return 0
         path = registry_path(args.registry)
         data = load_registry(path)
@@ -316,10 +326,10 @@ def main() -> int:
             candidate.update({"valid": valid, "missing_files": missing})
             if valid or args.include_invalid:
                 output.append(candidate)
-        print(json.dumps(output, ensure_ascii=False, indent=2))
+        print(json.dumps(output, ensure_ascii=True, indent=2))
         return 0
     except (OSError, UnicodeError, ValueError, json.JSONDecodeError) as exc:
-        print(f"error: {exc}", file=os.sys.stderr)
+        print(f"error: {exc}", file=sys.stderr)
         return 2
 
 

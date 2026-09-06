@@ -24,6 +24,14 @@ STATE_FILES = (
 )
 
 
+def configure_portable_stdio() -> None:
+    """Prevent narrow console encodings from crashing on project names and paths."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure:
+            reconfigure(errors="backslashreplace")
+
+
 def slugify(value: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
     if slug:
@@ -86,6 +94,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
+    configure_portable_stdio()
     args = parse_args()
     if not 15 <= args.session_minutes <= 480:
         print("error: --session-minutes must be between 15 and 480", file=sys.stderr)
